@@ -3,7 +3,6 @@
 
 A machine learning project that predicts the presence or absence of heart disease from 13 clinical features. The project trains a **Logistic Regression** classifier on the Cleveland heart disease dataset and provides a simple **Flask REST API** for predictions.
 
-> **Important:** This is an educational prototype, not a medical diagnostic tool. Its output should not be used to make clinical decisions.
 
 ## Project overview
 

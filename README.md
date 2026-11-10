@@ -1,181 +1,254 @@
-[README.md](https://github.com/user-attachments/files/34587557/README.md)
-# Heart Disease Risk Prediction Using Machine Learning
+Heart Disease Prediction Using Machine Learning
 
-A machine learning project that predicts the presence or absence of heart disease from 13 clinical features. The project trains a **Logistic Regression** classifier on the Cleveland heart disease dataset and provides a simple **Flask REST API** for predictions.
+About the Project
 
+Heart Disease Prediction is a machine learning project that predicts whether a person may have heart disease based on their medical information.
 
-## Project overview
+The main goal of this project is to use machine learning to analyze health-related data and make predictions about the possibility of heart disease.
 
-The dataset contains **303 patient records**, **13 input features**, and a binary target (`0` = no heart disease, `1` = heart disease). The training notebook explores the data, checks missing values, splits the dataset, trains a Logistic Regression model, and saves it as `prediction_model.pkl`.
+We developed this project using Python and Logistic Regression with the Cleveland Heart Disease Dataset.
 
-### Reported results
+The project also includes a Flask API that allows users to submit medical information and receive a prediction.
 
-| Metric | Value |
-|---|---:|
-| Dataset size | 303 records |
-| Training set | 242 records (80%) |
-| Test set | 61 records (20%) |
-| Test accuracy | **80.33%** (49/61 correct) |
-| Test ROC-AUC | **~0.904** |
-| True negatives (TN) | 22 |
-| False positives (FP) | 6 |
-| False negatives (FN) | 6 |
-| True positives (TP) | 27 |
+How the Project Works
 
-The split uses `test_size=0.2`, `stratify=Y`, and `random_state=2`. The model is `LogisticRegression(max_iter=1000)`. The notebook passes the original feature values directly to the model; it **does not apply feature scaling**, even though some scaler classes are imported.
+The project follows a simple process:
 
-These results are from a single held-out split, not cross-validation or external clinical validation.
+Collect heart disease data from the dataset.
 
-## Features
+Explore and prepare the data for training.
 
-The model uses these input columns **in this order**:
+Train a machine learning model using Logistic Regression.
 
-| Feature | Description |
-|---|---|
-| `age` | Age in years |
-| `sex` | Sex (dataset-encoded) |
-| `cp` | Chest pain type |
-| `trestbps` | Resting blood pressure |
-| `chol` | Serum cholesterol |
-| `fbs` | Fasting blood sugar indicator |
-| `restecg` | Resting electrocardiogram result |
-| `thalach` | Maximum heart rate achieved |
-| `exang` | Exercise-induced angina |
-| `oldpeak` | ST depression induced by exercise |
-| `slope` | Slope of peak exercise ST segment |
-| `ca` | Number of major vessels shown by fluoroscopy |
-| `thal` | Thalassemia / perfusion test category |
+Test the model to check its performance.
 
-The `target` column is the prediction label and **must not** be included in API requests.
+Save the trained model for future predictions.
 
-## Repository structure
+Use Flask to provide predictions through an API.
 
-```text
-.
-├── app.py                    # Flask API
-├── heartDiseases.ipynb       # Training and evaluation notebook
-├── heart_disease_data.csv    # Dataset
-├── prediction_model.pkl      # Serialized trained model
-├── requirements.txt          # Dependencies (if included)
+Dataset
+
+We used the Cleveland Heart Disease Dataset, which contains:
+
+303 patient records.
+
+13 medical input features.
+
+1 target column indicating the presence or absence of heart disease.
+
+Some of the features used by the model include:
+
+Age
+
+Sex
+
+Chest pain type
+
+Resting blood pressure
+
+Cholesterol level
+
+Maximum heart rate
+
+Exercise-induced angina
+
+Number of major blood vessels
+
+These features help the model identify patterns related to heart disease.
+
+Machine Learning Model
+
+We used Logistic Regression to train the prediction model.
+
+Logistic Regression is a classification algorithm that predicts one of two possible outcomes:
+
+0: No heart disease
+
+1: Heart disease
+
+The dataset was divided into two parts:
+
+80% for training the model.
+
+20% for testing the model.
+
+Model Performance
+
+Our model achieved the following results on the test dataset:
+
+Evaluation
+
+Result
+
+Total records
+
+303
+
+Training records
+
+242
+
+Testing records
+
+61
+
+Accuracy
+
+80.33%
+
+ROC-AUC
+
+Approximately 0.904
+
+These results show how the model performed on our test data. They do not guarantee accurate predictions for every person.
+
+Technologies Used
+
+Python – Main programming language.
+
+Pandas – For handling and analyzing data.
+
+NumPy – For numerical operations.
+
+Scikit-learn – For building and training the machine learning model.
+
+Jupyter Notebook – For data analysis and model training.
+
+Flask – For creating the prediction API.
+
+Flask-CORS – For handling cross-origin requests.
+
+Project Structure
+
+Heart-Disease-Prediction/
+│
+├── app.py
+├── heartDiseases.ipynb
+├── heart_disease_data.csv
+├── prediction_model.pkl
+├── requirements.txt
 └── README.md
-```
 
-Your notebook may be named `heartDiseases(2).ipynb` after downloading; either name works.
+Installation and Setup
 
-## Installation
+Step 1: Clone the Repository
 
-**Requirements:** Python 3 and the packages Flask, Flask-CORS, pandas, NumPy, scikit-learn, and Jupyter (for the notebook).
-
-```bash
 git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+
+Step 2: Open the Project Folder
+
 cd YOUR_REPOSITORY
-python -m venv .venv
-```
 
-Activate the environment:
+Step 3: Install Required Packages
 
-```bash
-# Windows
-.venv\Scripts\activate
-
-# macOS / Linux
-source .venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
 pip install flask flask-cors pandas numpy scikit-learn notebook
-```
 
-If the repository includes a compatible `requirements.txt`, you can use `pip install -r requirements.txt` instead. The saved model was created with scikit-learn **1.2.2**; using that version is recommended for compatibility when loading the pickle file.
+Step 4: Run the Flask Application
 
-## Run the prediction API
-
-Ensure `prediction_model.pkl` is in the same working directory as `app.py`, then run:
-
-```bash
 python app.py
-```
 
-The Flask development server normally starts at `http://127.0.0.1:5000`.
+The server will start at:
 
-### Endpoints
+http://127.0.0.1:5000
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| `GET` | `/` | Welcome message |
-| `GET` | `/test` | Simple API test |
-| `POST` | `/predict` | Predict a binary heart disease label |
+API Endpoints
 
-### Example prediction request
+Method
 
-```bash
-curl -X POST http://127.0.0.1:5000/predict \
-  -H "Content-Type: application/json" \
-  -d '{
-    "age": 62,
-    "sex": 0,
-    "cp": 0,
-    "trestbps": 140,
-    "chol": 268,
-    "fbs": 0,
-    "restecg": 0,
-    "thalach": 160,
-    "exang": 0,
-    "oldpeak": 3.6,
-    "slope": 0,
-    "ca": 2,
-    "thal": 2
-  }'
-```
+Endpoint
 
-The current implementation returns a **JSON string**, not a JSON object. Depending on the prediction, the response is one of:
+Description
 
-```json
+GET
+
+/
+
+Displays a welcome message.
+
+GET
+
+/test
+
+Checks whether the API is working.
+
+POST
+
+/predict
+
+Predicts the possibility of heart disease.
+
+Example Prediction
+
+Send a POST request to:
+
+http://127.0.0.1:5000/predict
+
+Example input:
+
+{
+  "age": 62,
+  "sex": 0,
+  "cp": 0,
+  "trestbps": 140,
+  "chol": 268,
+  "fbs": 0,
+  "restecg": 0,
+  "thalach": 160,
+  "exang": 0,
+  "oldpeak": 3.6,
+  "slope": 0,
+  "ca": 2,
+  "thal": 2
+}
+
+The API returns one of the following predictions:
+
 "The Person does not have a Heart Disease"
-```
 
-or
-
-```json
 "The Person has Heart Disease"
-```
 
-The current API does not return a probability score, validate the supplied fields, or provide structured error responses.
+Project Objectives
 
-## Train the model again
+The objective of this project is to understand how machine learning can be used in healthcare-related applications.
 
-1. Open `heartDiseases.ipynb` (or `heartDiseases(2).ipynb`) in Jupyter Notebook.
-2. Keep `heart_disease_data.csv` in the notebook's working directory.
-3. Run the cells in order to inspect the data, train the classifier, and calculate test accuracy.
-4. The serialization cell writes a new `prediction_model.pkl` file.
+Through this project, we learned how to:
 
-```bash
-jupyter notebook
-```
+Work with a real-world medical dataset.
 
-**Note:** Retraining can yield different convergence behavior across scikit-learn versions. Only replace the existing model file after checking its evaluation results.
+Analyze and prepare data.
 
-## Limitations and future improvements
+Train a machine learning classification model.
 
-- Evaluate with stratified cross-validation and report variability across folds.
-- Add precision, recall, F1-score, ROC-AUC, and confusion-matrix reporting to the notebook.
-- Consider preprocessing with a training-only pipeline, including appropriate scaling and categorical encoding.
-- Validate incoming API values and enforce the model's expected feature schema.
-- Return prediction probabilities and structured JSON responses.
-- Disable Flask debug mode and restrict CORS before any production deployment.
-- Test on independent patient populations before considering clinical use.
+Evaluate model performance.
 
-## Authors
+Save and reuse a trained model.
 
-**Umme Ara Urbana** — Registration No. 22201216  
-**Tabeeb Tazwar Ahmad** — Registration No. 22201218  
-Department of Computer Science and Engineering  
-**University of Asia Pacific**, Dhaka, Bangladesh
+Build a Flask API for making predictions.
 
-## References
+Limitations
 
-- Detrano, R., et al. (1989). *International application of a new probability algorithm for the diagnosis of coronary artery disease*. The American Journal of Cardiology, 64(5), 304–310. https://doi.org/10.1016/0002-9149(89)90524-9
-- Mohan, S., Thirumalai, C., & Srivastava, G. (2019). *Effective heart disease prediction using hybrid machine learning techniques*. IEEE Access, 7, 81542–81554. https://doi.org/10.1109/ACCESS.2019.2923707
-- Weng, S. F., Reps, J., Kai, J., Garibaldi, J. M., & Qureshi, N. (2017). *Can machine-learning improve cardiovascular risk prediction using routine clinical data?* PLOS ONE, 12(4), e0174944. https://doi.org/10.1371/journal.pone.0174944
+This project is developed for educational purposes. Its predictions are not medical diagnoses and should not be used as a replacement for professional medical advice.
+
+The model has been tested on a small dataset and needs further testing with independent patient data before any real-world medical use.
+
+Authors
+
+Umme Ara Urbana
+Registration No: 22201216
+
+Tabeeb Tazwar Ahmad
+Registration No: 22201218
+
+Department of Computer Science and Engineering
+University of Asia Pacific
+Dhaka, Bangladesh
+
+References
+
+Cleveland Heart Disease Dataset – UCI Machine Learning Repository.
+
+Detrano et al. (1989). International application of a new probability algorithm for the diagnosis of coronary artery disease.
+
+Scikit-learn Documentation
+
+Flask Documentation
